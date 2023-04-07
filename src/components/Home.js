@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Table from '@mui/material/Table';
@@ -6,9 +6,9 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import Menu from './Menu';
 import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
 
 function Home(props) {
     console.log(props.albums);
@@ -17,12 +17,12 @@ function Home(props) {
             <Menu />
             <Box sx={{ textAlign: 'center', padding: '50px' }}>
                 <Typography variant="h5">
-                    The Last Month's Travellers List
+                    The User List's
                 </Typography>
             </Box>
             <Box sx={{ width: '100%' }}>
                 <>
-                    <Table sx={{ minWidth: 200,}} aria-label="simple table">
+                    <Table sx={{ minWidth: 200, }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell align="right">ID</TableCell>
@@ -47,9 +47,12 @@ function Home(props) {
                                         <TableCell align="right">{data.username}</TableCell>
                                         <TableCell align="right">{data.email}</TableCell>
                                         <TableCell align="right">{data.phone}</TableCell>
-                                        <TableCell align="right" onClick={console.log("Hai Team")} >
-                                            <Link to='/UserDetails'  >
-                                                <VisibilityOutlinedIcon onClick={() => (props.viewFromList(data.id),(props.userPosts(data.id)))} className='view-btn' />
+                                        <TableCell align="right"  >
+                                            <Link to='/UserDetails' >
+                                                <Button size="small" variant="contained" onClick={() => (props.viewFromList(data.id))} className='view-btn'>View</Button>
+                                            </Link>
+                                            <Link to='/UserPosts'  >
+                                                <Button size="small" variant="contained" onClick={() => (props.userPosts(data.id))} className='view-btn'>User Posts</Button>
                                             </Link>
                                         </TableCell>
                                     </TableRow>

@@ -16,7 +16,6 @@ function Menu(){
                 <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
                     My Tripfriday.com
                 </Typography>
-                {/* <Button color="inherit">Login</Button> */}
                 <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                     {navItems.map((item) => (
                         <Button key={item} sx={{ color: 'white' }}>

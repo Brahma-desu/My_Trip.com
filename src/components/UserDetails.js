@@ -10,27 +10,6 @@ import TableRow from '@mui/material/TableRow';
 
 function UserDetails(props) {
 
-    const url = 'https://jsonplaceholder.typicode.com/posts';
-    // const [posts, setPosts] = useState([]);
-    // const [userId, setUserId] = useState([]);
-    // console.log(userId);
-
-    // useEffect(() => {
-    //     fetch(url)
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             console.log(data);
-    //             // setPosts(data);
-    //             if(data.id === userId){
-    //                 setPosts(userId.id)
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             console.log(err.message);
-    //         });
-    // }, []);
-
-// console.log(posts);
     return (
         <>
             <Menu />
@@ -51,7 +30,6 @@ function UserDetails(props) {
                 </TableHead>
                 <TableBody>
                     {props.userDetails.map((data) => {
-                        // {setUserId(data.id)}
                         return (
                             <TableRow
                                 key={data.name}

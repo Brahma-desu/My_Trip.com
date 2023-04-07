@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   BrowserRouter,
   Routes,
@@ -7,45 +7,53 @@ import {
 } from "react-router-dom";
 import Home from './components/Home';
 import UserDetails from "./components/UserDetails";
+import UserPosts from "./components/UserPosts";
 
 
 export default class App extends React.Component{
   constructor() {
     super();
     this.state = {
-      albums: [],
+      users: [],
       userDetails: [],
       userPosts: [],
+      deletePost: [],
       updateAlbum: {}
     }
   }
 
   componentDidMount = async () => {
-    const albums = await fetch('https://jsonplaceholder.typicode.com/users')
+    const users = await fetch('https://jsonplaceholder.typicode.com/users')
       .then((response) => response.json())
       .then((json) => json);
     this.setState({
-      albums
+      users
     })
   }
 
   viewFromList = (id) => {
     fetch(`https://jsonplaceholder.typicode.com/users/${id}`, { method: 'GET', })
-    const viewAlbums = this.state.albums.filter((album) => album.id === id);
-    // alert("Your Album Deleted successfully");
+    const viewUsers = this.state.users.filter((album) => album.id === id);
     this.setState({
-      userDetails: viewAlbums,
+      userDetails: viewUsers,
     })
+
   }
 
-  userPosts = (id) => {
-    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, { method: 'GET', })
-    const viewAlbums = this.state.userPosts.filter((post) => post.id === id);
-    
-    this.setState({
-      userPosts: viewAlbums,
-    })
-  }
+    userPosts = async (id) =>{
+      await fetch(`https://jsonplaceholder.typicode.com/posts`)
+      .then ((response) => response.json())
+      .then ((josn) => {this.setState({userPosts: josn.filter((posts) => posts.userId === id)})});
+    }
+
+    userPostDelete = (id) => {
+      fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, { method: 'DELETE', })
+      const deletePost = this.state.deletePost.filter((album) => album.id !== id);
+      alert("Your Album Deleted successfully");
+      this.setState({
+        deletePost: deletePost,
+      })
+    }
 
   render() {
     console.log(this.state.userPosts);
@@ -53,46 +61,12 @@ export default class App extends React.Component{
       <>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home albums={this.state.albums} viewFromList={this.viewFromList} userPosts={this.userPosts} />} />
-            <Route path="/userDetails" element={<UserDetails  userDetails={this.state.userDetails} userPosts={this.state.userPosts} />} />
+            <Route path="/" element={<Home albums={this.state.users} viewFromList={this.viewFromList} userPosts={this.userPosts} />} />
+            <Route path="/userDetails" element={<UserDetails  userDetails={this.state.userDetails}   />} />
+            <Route path="/userPosts" element={<UserPosts userPosts={this.state.userPosts} userPostDelete = {this.userPostDelete} />} />
           </Routes>
         </BrowserRouter>
       </>
     )
   }
-
-
 }
-
-
-
-// function App() {
-
-//   const url = 'https://jsonplaceholder.typicode.com/users';
-//     const [posts, setPosts] = useState([]);
-
-//     useEffect(() => {
-//         fetch(url)
-//             .then((response) => response.json())
-//             .then((data) => {
-//                 // console.log(data);
-//                 setPosts(data);
-//             })
-//             .catch((err) => {
-//                 console.log(err.message);
-//             });
-//     }, []);
-
-//   return (
-//     <div className="App">
-//       <BrowserRouter>
-//       <Routes>
-//         <Route path="/" element={<Home />} post={posts.name} />
-//         {/* <Route path="users/*" element={<Users />} /> */}
-//       </Routes>
-//     </BrowserRouter>
-//   </div>
-//   );
-// }
-
-// export default App;
